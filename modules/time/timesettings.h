@@ -33,12 +33,6 @@
 
 #include <KQuickAddons/ConfigModule>
 
-class TimeZoneFilterProxy;
-
-//#include "settingsmodule.h"
-
-class TimeSettingsPrivate;
-
 /**
  * @class TimeSettings A class to manage time and date related settings. This class serves two functions:
  * - Provide a plugin implementation
@@ -53,7 +47,6 @@ class TimeSettings : public KQuickAddons::ConfigModule
     Q_PROPERTY(QString timeFormat READ timeFormat WRITE setTimeFormat NOTIFY timeFormatChanged)
     Q_PROPERTY(bool twentyFour READ twentyFour WRITE setTwentyFour NOTIFY twentyFourChanged)
     Q_PROPERTY(QString timeZone READ timeZone WRITE setTimeZone NOTIFY timeZoneChanged)
-    Q_PROPERTY(TimeZoneFilterProxy *timeZonesModel READ timeZonesModel WRITE setTimeZonesModel NOTIFY timeZonesModelChanged)
     Q_PROPERTY(QTime currentTime READ currentTime WRITE setCurrentTime NOTIFY currentTimeChanged)
     Q_PROPERTY(QDate currentDate READ currentDate WRITE setCurrentDate NOTIFY currentDateChanged)
     Q_PROPERTY(bool useNtp READ useNtp WRITE setUseNtp NOTIFY useNtpChanged)
@@ -82,14 +75,12 @@ public:
 
     QString timeFormat();
     QString timeZone();
-    TimeZoneFilterProxy *timeZonesModel();
     bool twentyFour();
 
     QString errorString();
 
 public Q_SLOTS:
     void setTimeZone(const QString &timezone);
-    void setTimeZonesModel(TimeZoneFilterProxy *timezones);
     void setTimeFormat(const QString &timeFormat);
     void setTwentyFour(bool t);
     void timeout();
@@ -115,7 +106,6 @@ protected:
 private:
     QString m_timeFormat;
     QString m_timezone;
-    TimeZoneFilterProxy *m_timeZonesModel;
     QString m_timeZoneFilter;
     QString m_currentTimeText;
     QTime m_currentTime;
@@ -124,7 +114,6 @@ private:
     QString m_errorString;
 
     void initSettings();
-    void initTimeZones();
 
     KSharedConfig::Ptr m_localeConfig;
     KConfigGroup m_localeSettings;
